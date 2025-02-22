@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach",
+            "port": 9229,
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug NestJS App",
+            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+            "runtimeExecutable": "/usr/bin/node",
+            "program": "${workspaceFolder}/src/main.ts",
+            "cwd": "${workspaceFolder}",
+            "protocol": "inspector",
+            "restart": true,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": ["<node_internals>/**"],
+            "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+        }
+    ]
+}

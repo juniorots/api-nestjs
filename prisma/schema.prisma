@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// tipoCardapio: D - DIURNO / N - NOTURNO
+// NOTA: Demais campos fora do escopo de uma POC...
+model Produto {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  nome String? 
+  tipoCardapio String? 
+  categoriaId String 
+  categoria Categoria @relation("CategoriaProdutos", fields: [categoriaId], references: [id])
+}
+
+model Categoria {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  nome String?
+  produtos Produto[] @relation("CategoriaProdutos")
+}
+
+// NOTA: Cardapio é uma bifurcacao que nao carece de entidade, no contexto logico...
